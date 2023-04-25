@@ -14,7 +14,7 @@
 	<name>spring-challenges</name>
 	<description>Spring challenges exercises building a catering API.</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
