@@ -22,13 +22,11 @@ public class CateringJobController {
     }
 
     @GetMapping
-    @ResponseBody
     public List<CateringJob> getCateringJobs() {
         return cateringJobRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    @ResponseBody
     public CateringJob getCateringJobById(@PathVariable Long id) {
         if (cateringJobRepository.existsById(id)) {
             return cateringJobRepository.findById(id).get();
@@ -42,8 +40,9 @@ public class CateringJobController {
         return cateringJobRepository.findByStatus(status);
     }
 
-    public CateringJob createCateringJob(CateringJob job) {
-        return null;
+    @PostMapping("/create")
+    public CateringJob createCateringJob(@RequestBody CateringJob job) {
+        return cateringJobRepository.save(job);
     }
 
     public CateringJob updateCateringJob(CateringJob cateringJob, Long id) {

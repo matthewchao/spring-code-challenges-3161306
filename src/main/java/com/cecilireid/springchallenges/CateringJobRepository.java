@@ -9,5 +9,6 @@ public interface CateringJobRepository extends CrudRepository<CateringJob, Long>
 
     List<CateringJob> findByStatus(Status status); // see https://www.baeldung.com/spring-data-derived-queries
 
-    long count();
+//    CateringJob save(CateringJob cateringJob);
+//    long count();
 }
