@@ -1,6 +1,9 @@
 package com.cecilireid.springchallenges;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -55,8 +58,18 @@ public class CateringJobController {
         }
     }
 
-    public CateringJob patchCateringJob(Long id, JsonNode json) {
-        return null;
+    @SneakyThrows
+    @PatchMapping("/{id}")
+    public CateringJob patchCateringJob(@PathVariable long id, @RequestBody JsonNode json) {
+        if (cateringJobRepository.existsById(id)) {
+            CateringJob cateringJob = cateringJobRepository.findById(id).get();
+            ObjectMapper om = new ObjectMapper();
+            ObjectReader or = om.readerForUpdating(cateringJob);
+            or.readValue(json);
+            return cateringJobRepository.save(cateringJob);
+        } else {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+        }
     }
 
     public Mono<String> getSurpriseImage() {
