@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -59,14 +60,15 @@ public class CateringJobController {
     }
 
     @SneakyThrows
+    @Transactional
     @PatchMapping("/{id}")
     public CateringJob patchCateringJob(@PathVariable long id, @RequestBody JsonNode json) {
         if (cateringJobRepository.existsById(id)) {
             CateringJob cateringJob = cateringJobRepository.findById(id).get();
             ObjectMapper om = new ObjectMapper();
             ObjectReader or = om.readerForUpdating(cateringJob);
-            or.readValue(json);
-            return cateringJobRepository.save(cateringJob);
+            or.readValue(json); // this updates the cateringJob object
+            return cateringJob;
         } else {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
         }
