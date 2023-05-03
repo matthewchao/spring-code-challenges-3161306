@@ -86,7 +86,7 @@ public class CateringJobController {
 
 //    @GetMapping(value="/surpriseImage",
 //            produces = MediaType.IMAGE_JPEG_VALUE
-//    )
+//    ) // commented out code shows actually returning a (fixed) image instead of a URL to an image
 //    public Mono<byte[]> getSurpriseImage() {
 //        return client.get()
 //                .uri("/shibes/6a6903f0fc4e4f820d04751e3f4ba260e190ead6.jpg")
